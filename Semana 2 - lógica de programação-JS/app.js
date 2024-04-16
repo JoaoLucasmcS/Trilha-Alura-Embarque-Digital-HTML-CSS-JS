@@ -1,17 +1,15 @@
-let listaDeNumerosSorteados = [0];
-let numeroSecreto = gerarNumeroAleatorio();
+let listaDeNumerosSorteados = [];
 let quantidadeDeNumerosDisponiveis = 10;
+let numeroSecreto = gerarNumeroAleatorio();
 let tentativas = 1;
 function gerarNumeroAleatorio() {
    let numeroEscolhido = parseInt(Math.random() * quantidadeDeNumerosDisponiveis + 1);
-   let  quantidadeDeNumerosNaLista = listaDeNumerosSorteados.length;
-
-    if(quantidadeDeNumerosNaLista == quantidadeDeNumerosDisponiveis){
-        listaDeNumerosSorteados = [];
-    }
-   if(listaDeNumerosSorteados.includes(numeroEscolhido)){
-    return gerarNumeroAleatorio();
-   }else{
+   let quantidadeDeNumerosNaLista = listaDeNumerosSorteados.length;
+   if(quantidadeDeNumerosNaLista == quantidadeDeNumerosDisponiveis){
+        listaDeNumerosSorteados = [];   
+    }if(listaDeNumerosSorteados.includes(numeroEscolhido)){
+        return gerarNumeroAleatorio();
+    }else{
     listaDeNumerosSorteados.push(numeroEscolhido);
     return numeroEscolhido;
    }
@@ -21,6 +19,7 @@ function gerarNumeroAleatorio() {
 function exibirTextoNaTela(tag, texto){
     let campo = document.querySelector(tag);
     campo.innerHTML = texto;
+    responsiveVoice.speak(texto,'Brazilian Portuguese Female', {rate:1.2});
 }
 
 function exibirMensagemInicial(){
@@ -37,7 +36,7 @@ function verificarChute(){
         exibirTextoNaTela("p","O número secreto é maior");
     }else{
         let palavraTentativa = tentativas >1 ? "tentativas" : "tentativa";
-        let mensagemTentativas = `Você descoriu o número secreto com ${tentativas} ${palavraTentativa}`;
+        let mensagemTentativas = `Você descobriu o número secreto com ${tentativas} ${palavraTentativa}`;
         exibirTextoNaTela("h1","Acertou!!");
         exibirTextoNaTela("p",mensagemTentativas);
         document.getElementById("reiniciar").removeAttribute('disabled');
